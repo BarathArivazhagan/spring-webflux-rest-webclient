@@ -1,13 +1,21 @@
-package com.barath.app.model;
+package com.barath.app.entity;
 
 
+import javax.persistence.*;
 
+@Entity
+@Table(name="CUSTOMER")
 public class Customer {
-	
+
+	@Id
+	@Column(name="CUSTOMER_ID")
 	private Long customerId;
-	
+
+	@Column(name="CUSTOMER_NAME")
 	private String customerName;
-	
+
+	@Enumerated(EnumType.STRING)
+	@Column(name="CUSTOMER_GENDER")
 	private CustomerGender customerGender;
 	
 	
