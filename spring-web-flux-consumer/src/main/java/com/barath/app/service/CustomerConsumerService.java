@@ -1,22 +1,21 @@
 package com.barath.app.service;
 
-import com.barath.app.configuration.RESTENDPOINTS;
-import com.barath.app.model.Customer;
-import com.barath.app.util.JacksonUtils;
+import java.lang.invoke.MethodHandles;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyExtractors;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import com.barath.app.configuration.RestEndpoints;
+import com.barath.app.model.Customer;
+import com.barath.app.util.JacksonUtils;
+
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.lang.invoke.MethodHandles;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @Service
 public class CustomerConsumerService {
@@ -34,7 +33,7 @@ public class CustomerConsumerService {
             logger.info(" consumer save customer with details {}", JacksonUtils.toJson(customer));
         }
          return  this.webClient.post()
-                    .uri(RESTENDPOINTS.NEW_CUSTOMER_ENDPOINT)
+                    .uri(RestEndpoints.NEW_CUSTOMER_ENDPOINT)
                     .body(BodyInserters.fromObject(customer))
                     .exchange()
                     .flatMap( response -> response.body(BodyExtractors.toMono(Customer.class)));
@@ -47,7 +46,7 @@ public class CustomerConsumerService {
             logger.info("consumer save customers with details {}", JacksonUtils.toJson(customers));
         }
         return  this.webClient.post()
-                .uri(RESTENDPOINTS.CUSTOMER_SERVICE_BASEPATH)
+                .uri(RestEndpoints.CUSTOMER_SERVICE_BASEPATH)
                 .body(BodyInserters.fromObject(customers))
                 .retrieve()
                 .bodyToFlux(Customer.class);
@@ -59,7 +58,7 @@ public class CustomerConsumerService {
             logger.info(" consumer get  customer with customerid {}", customerId);
         }
         return this.webClient.get()
-                .uri(RESTENDPOINTS.GET_CUSTOMER_ENDPOINT, new Object[] {customerId})
+                .uri(RestEndpoints.GET_CUSTOMER_ENDPOINT, new Object[] {customerId})
                 .exchange()
                 .flatMap( clientResponse -> clientResponse.bodyToMono(Customer.class));
     }
@@ -71,7 +70,7 @@ public class CustomerConsumerService {
         }
         return this.webClient.get()
                     .uri( uriBuilder -> {
-                        return uriBuilder.path(RESTENDPOINTS.GET_CUSTOMER_BYNAME_ENDPOINT)
+                        return uriBuilder.path(RestEndpoints.GET_CUSTOMER_BYNAME_ENDPOINT)
                                 .queryParam("customerName", customerName)
                                 .build();
                     })
@@ -84,7 +83,7 @@ public class CustomerConsumerService {
 
         return this.webClient
                     .delete()
-                    .uri(RESTENDPOINTS.DELETE_CUSTOMER_ENDPOINT)
+                    .uri(RestEndpoints.DELETE_CUSTOMER_ENDPOINT)
                     .exchange()
                     .flatMap( clientResponse -> clientResponse.bodyToMono(Void.class));
     }
@@ -97,7 +96,7 @@ public class CustomerConsumerService {
 
         return  this.webClient
                     .get()
-                    .uri(RESTENDPOINTS.CUSTOMER_SERVICE_BASEPATH)
+                    .uri(RestEndpoints.CUSTOMER_SERVICE_BASEPATH)
                     .retrieve()
                     .bodyToFlux(Customer.class);
     }

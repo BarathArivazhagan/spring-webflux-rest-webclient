@@ -22,13 +22,13 @@ public class RouterConfiguration {
     public RouterFunction<ServerResponse> routerFunctions(final CustomerHandler customerHandler) {
 
         return RouterFunctions
-                .route(GET(RESTENDPOINTS.CUSTOMER_SERVICE_BASEPATH)
+                .route(GET(RestEndpoints.CUSTOMER_SERVICE_BASEPATH)
                 .and(RequestPredicates.accept(MediaType.APPLICATION_JSON_UTF8)),customerHandler::findCustomers)
-                .andRoute(GET(RESTENDPOINTS.GET_CUSTOMER_BYNAME_ENDPOINT)
+                .andRoute(GET(RestEndpoints.GET_CUSTOMER_BYNAME_ENDPOINT)
                         .and(RequestPredicates.accept(MediaType.APPLICATION_JSON_UTF8)),customerHandler::findCustomerByName)
-                .andRoute(GET(RESTENDPOINTS.GET_CUSTOMER_ENDPOINT)
+                .andRoute(GET(RestEndpoints.GET_CUSTOMER_ENDPOINT)
                         .and(RequestPredicates.accept(MediaType.APPLICATION_JSON_UTF8)),customerHandler::findCustomer)
-                .andRoute(POST(RESTENDPOINTS.CUSTOMER_SERVICE_BASEPATH)
+                .andRoute(POST(RestEndpoints.CUSTOMER_SERVICE_BASEPATH)
                     .and(RequestPredicates.accept(MediaType.APPLICATION_JSON_UTF8)),customerHandler::saveCustomer);
 
 
