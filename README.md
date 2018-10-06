@@ -1,4 +1,4 @@
-# spring-webflux-rest-client
+# Spring-WebFlux-Rest-Client
 This project demonstrates usage of spring 5 web flux rest client for communicating between microservices.
 
 ## Spring WebFlux - WebClient
