@@ -17,8 +17,8 @@ public class CustomerControllerAdvice {
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> handleException(Exception ex) {
 		
-		logger.error("exception in customer controller {}",ex.getMessage());
-		logger.error("exception in customer controller {}",ex.getCause());
+		logger.error("exception in customer controller message {}",ex.getMessage());
+		logger.error("exception in customer controller cause {}",ex.getCause());
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
 	}
 

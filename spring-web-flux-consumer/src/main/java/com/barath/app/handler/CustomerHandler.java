@@ -73,4 +73,16 @@ public class CustomerHandler {
                       return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(BodyInserters.fromObject(customers));
                   });
     }
+
+    public Mono<ServerResponse> findCustomerOrDefault(ServerRequest request){
+
+        Long customerId = Long.valueOf(request.pathVariable("customerId"));
+        logger.info("called =====>");
+        return Mono.just(customerId)
+                .flatMap(aLong -> {
+                    return this.customerConsumerService.switchToEmptyCustomerIfNotFound(customerId);
+                }).flatMap(customer -> {
+                    return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(BodyInserters.fromObject(customer));
+                });
+    }
 }

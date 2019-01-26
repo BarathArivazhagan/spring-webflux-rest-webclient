@@ -72,4 +72,5 @@ public class CustomerService {
 
         return  Flux.fromIterable(this.customerRepository.findAll());
     }
+    
 }

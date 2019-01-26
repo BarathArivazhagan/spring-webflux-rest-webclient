@@ -42,7 +42,7 @@ public class CustomerConsumerServiceTest {
 
 		String customerJson = customerJson();
 		
-		stubFor(post(urlEqualTo(RestEndpoints.NEW_CUSTOMER_ENDPOINT))
+		stubFor(post(urlEqualTo(RestEndpoints.CUSTOMER_ENDPOINT))
 				.willReturn(aResponse()
 					.withBody(customerJson)
 					.withHeader("Content-Type", "application/json")));

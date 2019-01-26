@@ -33,9 +33,9 @@ public class CustomerConsumerService {
             logger.info(" consumer save customer with details {}", JacksonUtils.toJson(customer));
         }
          return  this.webClient.post()
-                    .uri(RestEndpoints.NEW_CUSTOMER_ENDPOINT)
+                    .uri(RestEndpoints.POST_CUSTOMER_ENDPOINT)
                     .body(BodyInserters.fromObject(customer))
-                    .exchange()
+                    .exchange()                  
                     .flatMap( response -> response.body(BodyExtractors.toMono(Customer.class)));
 
     }
@@ -46,7 +46,7 @@ public class CustomerConsumerService {
             logger.info("consumer save customers with details {}", JacksonUtils.toJson(customers));
         }
         return  this.webClient.post()
-                .uri(RestEndpoints.CUSTOMER_SERVICE_BASEPATH)
+                .uri(RestEndpoints.POST_CUSTOMERS_ENDPOINT)
                 .body(BodyInserters.fromObject(customers))
                 .retrieve()
                 .bodyToFlux(Customer.class);
@@ -96,8 +96,23 @@ public class CustomerConsumerService {
 
         return  this.webClient
                     .get()
-                    .uri(RestEndpoints.CUSTOMER_SERVICE_BASEPATH)
+                    .uri(RestEndpoints.GET_CUSTOMERS_ENDPOINT)
                     .retrieve()
                     .bodyToFlux(Customer.class);
+    }
+    
+    public Mono<Customer>  switchToEmptyCustomerIfNotFound(Long customerId){
+
+        if(logger.isInfoEnabled()) {
+            logger.info(" switch to default customer when not found");
+        }
+    	return this.getCustomer(customerId)
+                    .switchIfEmpty(defaultCustomer());
+    				
+    }
+
+    public Mono<Customer> defaultCustomer(){
+        logger.info("constructing default customer ");
+        return Mono.just(new Customer());
     }
 }
