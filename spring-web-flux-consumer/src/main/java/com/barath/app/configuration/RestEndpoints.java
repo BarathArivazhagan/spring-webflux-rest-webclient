@@ -12,5 +12,5 @@ public class RestEndpoints {
     public static final String GET_CUSTOMER_OR_DEFAULT_ENDPOINT = CUSTOMER_ENDPOINT.concat("/fallback/{customerId}");
     public static final String DELETE_CUSTOMER_ENDPOINT = CUSTOMER_ENDPOINT;
     public static final String GET_CUSTOMERS_ENDPOINT = CUSTOMERS_ENDPOINT;
-    private static final String PDF_RETRIEVE_ENDPOINT = "/retrieve/pdf";
+    public static final String PDF_RETRIEVE_ENDPOINT = "/retrieve/pdf";
 }

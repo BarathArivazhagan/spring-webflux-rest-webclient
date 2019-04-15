@@ -26,17 +26,18 @@ public class PDFConsumerService {
 	        this.webClient = webClient;
 	    }
 
-	    public Mono<ClientResponse> getPDF() {
+	    public Mono<String> getPDF() {
 
 	        if(logger.isInfoEnabled()) {
 	            logger.info(" getting PDF ");
 	        }
-	        return null;
-	         return  this.webClient.post()
-	                    .uri(RestEndpoints.NEW_CUSTOMER_ENDPOINT)
+         	return  this.webClient.post()
+	                    .uri(RestEndpoints.PDF_RETRIEVE_ENDPOINT)
 	                    .body(BodyInserters.fromObject(null))
 	                    .exchange()
-	                    .flatMap( response -> response.body(BodyExtractors.toMono(Customer.class)));
+	                    .flatMap( response -> {
+	                    	return response.bodyToMono(String.class);
+						});
 
 	    }
 

@@ -45,7 +45,7 @@ public class RouterConfiguration {
     public RouterFunction<ServerResponse> pdfRouterFunctions(final PDFHandler pdfHandler) {
 
         return RouterFunctions
-                .andRoute(PUT(RestEndpoints.CUSTOMER_ENDPOINT)
+                .route(POST(RestEndpoints.PDF_RETRIEVE_ENDPOINT)
                         .and(RequestPredicates.accept(MediaType.APPLICATION_PDF)),pdfHandler::getPDF);
 
 
