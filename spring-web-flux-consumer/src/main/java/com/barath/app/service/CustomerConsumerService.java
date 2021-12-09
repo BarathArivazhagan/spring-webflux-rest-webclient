@@ -81,7 +81,7 @@ public class CustomerConsumerService {
 
         return this.webClient
                     .delete()
-                    .uri(RestEndpoints.DELETE_CUSTOMER_ENDPOINT)
+                    .uri(RestEndpoints.DELETE_CUSTOMER_ENDPOINT, new Object[] {customerId})
                     .exchangeToMono(clientResponse -> clientResponse.bodyToMono(Void.class));
     }
 
