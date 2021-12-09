@@ -1,25 +1,22 @@
 package com.barath.app.service;
 
-import java.lang.invoke.MethodHandles;
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
-import org.junit.Before;
-import org.junit.Test;
+import com.barath.app.AbstractSpringWebRunner;
+import com.barath.app.entity.Customer;
+import com.barath.app.entity.Customer.CustomerGender;
+import com.barath.app.repository.CustomerRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
-import com.barath.app.AbstractSpringWebRunner;
-import com.barath.app.entity.Customer;
-import com.barath.app.entity.Customer.CustomerGender;
-import com.barath.app.repository.CustomerRepository;
-
 import reactor.test.StepVerifier;
+
+import java.lang.invoke.MethodHandles;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class CustomerServiceTest extends AbstractSpringWebRunner {
 	
@@ -34,7 +31,7 @@ public class CustomerServiceTest extends AbstractSpringWebRunner {
 	Predicate<Customer> customerPredicate = cust -> "BARATH".equals(cust.getCustomerName()) && cust.getCustomerId() == 1 ;
 
 	
-	@Before
+	@BeforeEach
 	public void setup() {
 		
 		List<Customer> customers = this.customerData();

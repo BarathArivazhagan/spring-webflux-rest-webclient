@@ -8,8 +8,8 @@ import java.lang.invoke.MethodHandles;
 import java.util.List;
 
 import com.barath.app.repository.CustomerRepository;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,15 +46,13 @@ public class CustomerControllerTest extends AbstractSpringWebMVCRunner {
 	@Autowired
 	private CustomerRepository customerRepository;
 
-	@Before
+	@BeforeEach
 	public void setup(){
 		// clear the data before each test in test db
 		this.customerRepository.deleteAll();
 	}
 
 
-	
-	
 	@Test
 	public void  testSaveCustomer() throws Exception {
 		

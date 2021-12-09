@@ -40,7 +40,7 @@ public class CustomerConsumerServiceTest {
 	@Before
 	public void setup(){
 
-		String customerJson = customerJson();
+		String customerJson = customerJson("1", "BARATH", "MALE");
 		
 		stubFor(post(urlEqualTo(RestEndpoints.CUSTOMER_ENDPOINT))
 				.willReturn(aResponse()
@@ -51,24 +51,28 @@ public class CustomerConsumerServiceTest {
 
 	@Test
 	public void testSaveCustomer() {
+		Mono<Customer> customer1 = createCustomer("1", "BARATH", "MALE");
+		Mono<Customer> customer2 = createCustomer("2", "JOHN", "MALE");
+		Mono<Customer> customer3 = createCustomer("3", "JANE", "FEMALE");
 
-
-		String customerJson = customerJson();
-		Customer customer = (Customer)JacksonUtils.fromJson(customerJson,Customer.class);
-		Mono<Customer> customerMono = this.customerConsumerService.saveCustomer(customer);
-
-		StepVerifier.create(customerMono)
-				 .expectNextCount(1)
-				 .verifyComplete();
 
 	}
 
-	public String customerJson(){
+	private Mono<Customer> createCustomer(String id, String name, String gender) {
+		Customer customer = (Customer)JacksonUtils.fromJson(customerJson(id, name, gender),Customer.class);
+		Mono<Customer> customerMono = this.customerConsumerService.saveCustomer(customer);
+		StepVerifier.create(customerMono)
+				.expectNextCount(1)
+				.verifyComplete();
+		return customerMono;
+	}
+
+	public String customerJson(String id, String name, String gender){
 
 		return  "{\n" +
-				"    \"customerId\": 1,\n" +
-				"    \"customerName\": \"BARATH\",\n" +
-				"    \"customerGender\": \"MALE\"\n" +
+				"    \"customerId\": " + id + ",\n" +
+				"    \"customerName\": \"" + name + "\",\n" +
+				"    \"customerGender\": \"" + gender + "\"\n" +
 				"  }";
 	}
 

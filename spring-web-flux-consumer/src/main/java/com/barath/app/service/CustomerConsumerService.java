@@ -34,9 +34,8 @@ public class CustomerConsumerService {
         }
          return  this.webClient.post()
                     .uri(RestEndpoints.POST_CUSTOMER_ENDPOINT)
-                    .body(BodyInserters.fromObject(customer))
-                    .exchange()                  
-                    .flatMap( response -> response.body(BodyExtractors.toMono(Customer.class)));
+                    .body(BodyInserters.fromValue(customer))
+                    .exchangeToMono(response -> response.body(BodyExtractors.toMono(Customer.class)))      ;
 
     }
 
@@ -47,7 +46,7 @@ public class CustomerConsumerService {
         }
         return  this.webClient.post()
                 .uri(RestEndpoints.POST_CUSTOMERS_ENDPOINT)
-                .body(BodyInserters.fromObject(customers))
+                .body(BodyInserters.fromValue(customers))
                 .retrieve()
                 .bodyToFlux(Customer.class);
     }
@@ -59,8 +58,7 @@ public class CustomerConsumerService {
         }
         return this.webClient.get()
                 .uri(RestEndpoints.GET_CUSTOMER_ENDPOINT, new Object[] {customerId})
-                .exchange()
-                .flatMap( clientResponse -> clientResponse.bodyToMono(Customer.class));
+                .exchangeToMono(clientResponse -> clientResponse.bodyToMono(Customer.class));
     }
 
     public Flux<Customer> getCustomer(String customerName) {
@@ -83,9 +81,8 @@ public class CustomerConsumerService {
 
         return this.webClient
                     .delete()
-                    .uri(RestEndpoints.DELETE_CUSTOMER_ENDPOINT)
-                    .exchange()
-                    .flatMap( clientResponse -> clientResponse.bodyToMono(Void.class));
+                    .uri(RestEndpoints.DELETE_CUSTOMER_ENDPOINT, new Object[] {customerId})
+                    .exchangeToMono(clientResponse -> clientResponse.bodyToMono(Void.class));
     }
 
     public Flux<Customer> getCustomers() {

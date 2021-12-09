@@ -1,17 +1,16 @@
 package com.barath.app;
 
+import com.barath.app.entity.Customer;
+import com.barath.app.entity.Customer.CustomerGender;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import com.barath.app.entity.Customer;
-import com.barath.app.entity.Customer.CustomerGender;
-
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ActiveProfiles("test")
 public abstract class AbstractSpringWebRunner {

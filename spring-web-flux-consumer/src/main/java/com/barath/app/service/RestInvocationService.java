@@ -32,9 +32,8 @@ public class RestInvocationService implements GenericRestService {
 			Object body) {
 		Mono<?> restResponse=restClient.method(httpMethod)
 			.uri(path)
-			.body(BodyInserters.fromObject(body))
-			.exchange()
-			.flatMap( response -> response.body(BodyExtractors.toMono(Customer.class)));
+			.body(BodyInserters.fromValue(body))
+			.exchangeToMono(response -> response.body(BodyExtractors.toMono(Customer.class)));
 		logger.info("Client Response "+restResponse);
 		if( restResponse !=null ){
 			return Flux.just(new ResponseEntity<>(restResponse.block().toString(),HttpStatus.OK));
